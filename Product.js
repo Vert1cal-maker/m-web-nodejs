@@ -19,9 +19,17 @@ function Product(product){
 
 function createProduct(options){
     if(typeof options.name!=='string' || options.name===null){
-        throw new Error('Name argument must be String');
-    } 
-
+        throw new Error('name argument must be String');
+    } else if (typeof options.description!=='string' || options.description===null){
+        throw new Error('description argument must be String');
+    } else if (typeof options.price!=='float' || options.description===null){
+        throw new Error('price argument must be Float');
+    } else if(typeof options.brand!=='string' || options.description===null){
+        throw new Error('brand argument must be String');
+    } else if(typeof options.brand!=='intenger' || options.description===null){
+        throw new Error('quantity argument must be Intenger');
+    }
+    
     return{
         name : options.name,
         description : options.description,

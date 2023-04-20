@@ -24,10 +24,7 @@ function Product(name, description, price, brand, quantity){
 };
 
 Product.counter = 0;
-Product.prototype.searchSize = function(size){
-    console.log( this.sizes.find(size));
-    return 0;
-} 
+ 
 Product.prototype.isFloat = function(arg){
     return typeof arg === 'number' && !isNaN(arg) && arg % 1 !== 0;
 }

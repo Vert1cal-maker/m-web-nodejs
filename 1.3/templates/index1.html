@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style1.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="overlay"> </div>
+    <div class="coord">
+        <p id="languege"></p>
+        <p id="coordinate"></p>
+        <p id="location"></p>
+    </div>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+    <div class="box red">
+    </div>
+    <div class="box green">
+    </div>
+    <div class="box">
+    </div>
+    <div class="box yellow"></div>
+    <br>
+    <button class="overMe">Over me </button>
+    <button onclick="hideAll()">Hide</button>
+
+    <input type="text" , id="inputText" onfocus="show()"></input>
+    <button class="press">Press</button>
+    <br>
+    <br>
+    <textarea name="imagePath" id="tx" cols="30" rows="10"></textarea>
+    <button class="searchImage">search</button>
+    <br><br><br>
+    <div class="images">
+
+    </div>
+
+    <section">
+        <h2>task 13</h2>
+        <div class="task" id="block1" contenteditable="true">
+            <p>Write there...</p>
+        </div>
+        <div class="task" id="block2" contenteditable="true">
+            <p>Write there...</p>
+        </div>
+        <div class="task" id="block3" contenteditable="true">
+            <p>Write there...</p>
+        </div>
+
+        </section>
+        <section class="test">
+            <h2>task button to top</h1>
+                <div class="inner"></div>
+                <div class ="outer"></div>
+        </section>
+
+        <button id="btn_top" class="btn_top1">To top</button>
+        <button  class="showBlock">Show block</button>
+
+        <form><input type="submit" value="GO"></form>
+       
+
+
+
+
+
+        <Script>
+
+            window.addEventListener("DOMContentLoaded",()=>{
+                const form = document.querySelector("form");
+                form.addEventListener("submit",(event)=>{
+                    event.preventDefault();
+                })
+            })
+            const hideBlock = document.querySelector(".overlay");
+            const overlay = document.querySelector(".showBlock");
+
+            overlay.addEventListener("click",hideA)
+            hideBlock.addEventListener("click", ()=>{
+                hideBlock.style.display = "none";
+                document.body.style.overflow = 'auto';
+            })
+
+            function hideA(){
+                hideBlock.style.display = "block";
+                document.body.style.overflow = 'hidden';
+            }
+
+            const item = document.getElementById("block1");
+            const item2 = document.getElementById("block2");
+            const item3 = document.getElementById("block3");
+            let btnTop = document.getElementById("btn_top");
+            window.addEventListener("load", (event) => {
+                if (localStorage.getItem("inputItem")) {
+                    item.innerHTML = localStorage.getItem("inputItem");
+                }
+                if (document.cookie) {
+                    item2.innerHTML = document.cookie;
+                }
+                if (sessionStorage.getItem("input")) {
+                    item3.innerHTML = sessionStorage.getItem("input");
+                }
+            })
+
+            item3.addEventListener("input", save)
+            item2.addEventListener("input", saveCookie)
+            item.addEventListener("input", save);
+            btnTop.addEventListener("click", (event) => {
+                window.scrollTo({
+                    top: 0, behavior: 'smooth'
+                })
+            })
+
+
+            window.addEventListener("scroll", (event) => {
+                if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+                    document.getElementById("btn_top").style.display = "block";
+                } else {
+                    document.getElementById("btn_top").style.display = "none";
+                }
+            })
+
+            function save() {
+                localStorage.setItem("inputItem", item.innerHTML);
+                sessionStorage.setItem("input", item3.innerHTML);
+            }
+            function saveCookie() {
+                document.cookie = item2.innerHTML;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            document.querySelector(".yellow").addEventListener("click", clickFun)
+            document.querySelector('.overMe').addEventListener("mouseover", hide)
+            document.querySelector('.overMe').addEventListener("mouseout", hide)
+            document.getElementById('inputText').addEventListener('input', hideGrey)
+            document.querySelector(".press").addEventListener('click', getImage)
+            document.querySelector(".searchImage").addEventListener('click', searchImages)
+            document.addEventListener("mousemove", getCoordinate);
+            document.getElementById("languege").textContent = navigator.language;
+
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                let latitude = position.coords.latitude;
+                let longitude = position.coords.longitude;
+                document.getElementById("location").textContent = `"Ш:${latitude} Д:${longitude}"`
+            });
+
+
+
+
+            function getCoordinate() {
+                let x = event.clientX;
+                let y = event.clientY;
+                document.getElementById("coordinate").innerHTML = `x ${x} : y ${y}`
+            }
+
+
+            function getImage() {
+                let imagePath = document.getElementById('inputText').value
+                let image = document.getElementById('image');
+                image.src = `${imagePath}`;
+            }
+
+            function searchImages() {
+                const arrayImages = document.getElementById('tx').value.split("\n");
+                alert(arrayImages)
+                arrayImages.forEach(element => {
+                    let imageElement = document.createElement('img')
+                    imageElement.setAttribute('src', `${element}`);
+                    document.querySelector('.images').appendChild(imageElement)
+                });
+            }
+
+
+
+
+            function hideAll() {
+                const selector = `.${document.getElementById('inputText').value}`;
+                let elements = document.querySelectorAll(selector);
+                elements.forEach(function (element) {
+                    element.classList.toggle('hidden');
+                })
+            }
+
+            let click = false;
+
+            function clickFun() {
+                const yellow = document.querySelector('.yellow');
+                if (!click) {
+                    yellow.addEventListener('click', greeting())
+                } else if (click) {
+                    yellow.removeEventListener('click', greeting)
+                    yellow.addEventListener("click", yellow.remove());
+                }
+                click = !click
+            }
+
+            function greeting() {
+                alert("hi");
+            }
+
+            function hide() {
+                document.querySelector('.red').classList.toggle('hidden');
+            }
+
+            function show() {
+                document.querySelector('.green').style.display = "inline-block";
+            }
+
+            function hideGrey() {
+                document.querySelector('.green').style.display = "none";
+            }
+        </Script>
+
+</body>
+
+</html>

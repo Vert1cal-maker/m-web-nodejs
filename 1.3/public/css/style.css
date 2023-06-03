@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+   
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0a4344;
+    font-family: 'Noto Serif', serif;
+    background-color:#188b8c;
+    padding: 200px;
+}
+
+.drag{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aquamarine;
+    border-radius: 7px;;
+    width: 35%;
+    height: 120px;
+}
+
+.open{
+    width: 110px;
+}
+.file{
+    position: fixed;
+    top: 230px;
+    left: 680px;
+    width: 55px;
+}

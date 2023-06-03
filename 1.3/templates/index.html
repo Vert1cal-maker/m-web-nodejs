@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="drag">
+        <input class="inp" type="file">
+
+    </div>
+
+    <div class="trashSection">
+        <img class="file" src="/image/file.png" alt="">
+        <img class="open" src="/image/close.png" alt="">
+    </div>
+
+
+    <script>
+
+        const input = document.querySelector(".inp");
+        const file = document.querySelector(".file");
+
+
+
+        file.ondragstart = () => false;
+        file.addEventListener('mousedown', selectelement);
+        input.addEventListener('change', () => file.src = '/image/sm.png');
+
+
+        function selectelement(event) {
+            let shiftX = event.clientX - file.getBoundingClientRect().left;
+            let shiftY = event.clientY - file.getBoundingClientRect().top;
+            file.style.position = "absolute";
+            file.style.zIndex = 1000;
+            document.addEventListener('mousemove', onMouseMove);
+
+            function moveAt(pageX, pageY) {
+                file.style.left = pageX - shiftX + "px";
+                file.style.top = pageY - shiftY + "px";
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            file.onmouseup = function () {
+                document.removeEventListener('mousemove', onMouseMove);
+                file.onmouseup = null;
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

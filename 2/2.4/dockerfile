@@ -1,0 +1,21 @@
+# Використовуємо образ Node.js з Alpine
+FROM node:alpine
+
+# Встановлюємо робочу директорію
+WORKDIR /app
+
+# Копіюємо package.json та package-lock.json
+COPY package*.json ./
+
+# Встановлюємо залежності
+RUN npm install
+
+# Копіюємо всі файли з вашої поточної директорії в контейнер
+COPY . .
+
+# Надаємо права виконання для start.sh
+RUN chmod +x start.sh
+
+# Запускаємо скрипт start.sh, який в свою чергу запустить обидва файли на різних портах
+CMD ["sh", "./start.sh"]
+
